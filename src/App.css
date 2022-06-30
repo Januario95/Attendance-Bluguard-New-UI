@@ -1,0 +1,31 @@
+:root {
+  --body-background: #E8F1F2;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  /* background: var(--body-background); */
+  background: white;
+}
+*::-webkit-scrollbar {
+    width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+    border: 1px solid #ccc;
+    background: #fff; /*  #A0CDDC; */
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    /* background-color: #79aec8; */
+    /* border-radius: 20px; */
+    border: 3px solid #ccc; /* #A0CDDC; */
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
