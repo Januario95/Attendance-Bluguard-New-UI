@@ -2,6 +2,19 @@ import React from 'react';
 
 
 const GatewayTable = ({ gateway }) => {
+    // let color;
+    // if (gateway.gateway_status === 'ONLINE') {
+    //     color = 'green';
+    // } else if (gateway.gateway_status === 'OFFLINE')  {
+    //     color = 'red;'
+    // }
+    let color;
+    if (gateway.gateway_status === 'ONLINE') {
+        color = "green";
+    } else {
+        color = "red";
+    }
+
     const formatDateTime = datetime => {
         if (datetime === null || datetime === undefined) {
             return ''
@@ -16,7 +29,9 @@ const GatewayTable = ({ gateway }) => {
 
     return (
         <tr>
-            <td>{gateway.gateway_status}</td>
+            <td style={{
+                color: `${color}`
+            }}>{gateway.gateway_status}</td>
             <td>{gateway.gateway_location}</td>
             <td>{gateway.gateway_mac}</td>
             <td>{gateway.gateway_latitude}</td>

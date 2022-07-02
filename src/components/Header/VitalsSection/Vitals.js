@@ -125,14 +125,14 @@ const VitalsPage = () => {
                                 href="#"
                                 className="events-sublink"
                                 onClick={(e) => handleLinkClick('events')}
-                            ></a>
+                            >Alerts</a>
                         </div>
                         <div className="attendees menu-option">
                             <a
                                 href="#"
                                 className="attendees-sublink"
-                                onClick={(e) => handleLinkClick('attendees')}
-                            ></a>
+                                onClick={(e) => handleLinkClick('weareables')}
+                            >Vitals</a>
                         </div>
                         <div className="attendances menu-option">
                             <a
@@ -143,7 +143,7 @@ const VitalsPage = () => {
                         </div>
                     </div>
 
-                    {/*<div className="bottommenu">
+                    <div className="bottommenu">
                         <div className="subtitle menu-option">
                             <a href="#">IoT Devices</a>
                         </div>
@@ -168,7 +168,7 @@ const VitalsPage = () => {
                                 onClick={(e) => handleLinkClick('beacons')}
                             >Beacons</a>
                         </div>
-                    </div> */}
+                    </div>
                 </div>
 
                 <div className="rightbody body-part">

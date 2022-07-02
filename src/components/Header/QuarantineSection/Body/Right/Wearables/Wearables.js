@@ -87,7 +87,7 @@ const WearablePage = () => {
                                     key={index}
                                     deviceStatus={device.device_status}
                                     temp={device.device_temp}
-                                    oxygen={device.device_O2}
+                                    oxygen={device.device_o2}
                                     batLevel={device.device_bat}
                                     heartRate={device.device_hr}
                                     quality={deviceStatusFunc(device.device_status, device.incorrect_data_flag, device.device_temp)}

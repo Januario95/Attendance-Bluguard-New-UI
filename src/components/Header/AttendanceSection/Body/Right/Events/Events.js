@@ -191,6 +191,7 @@ const EventPage = () => {
                     >Refresh</button>
                 </div>
 
+                {/*
                 <form
                     className="form-create-tank"
                     onSubmit={handleSubmit}
@@ -229,7 +230,7 @@ const EventPage = () => {
                         className="add-subproject"
                         onClick={(e) => handleUpdateEvent(e)}
                     >Add SubProject</button>
-                </form>
+                </form> */}
 
                 <div className="spinner"></div>
                 <table className="styled-table" id="table-events">
@@ -272,10 +273,10 @@ const EventPage = () => {
                             <tr>
                                 <th>Attendee Name</th>
                                 <th>Tag ID</th>
-                                <th>Check-In Date</th>
+                                {/*<th>Check-In Date</th>
                                 <th>Check-In Time</th>
                                 <th>Check-Out Date</th>
-                                <th>Check-Out Time</th>
+                                <th>Check-Out Time</th> */}
                             </tr>
                         </thead>
                         <tbody>

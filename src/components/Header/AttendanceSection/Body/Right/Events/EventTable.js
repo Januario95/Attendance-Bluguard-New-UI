@@ -11,6 +11,9 @@ const EventTable = ({
     end_datetime, event_location, event_sublocation,
     showAtendees, popupLoginToggle
 }) => {
+    const [startStopText, setStartStopText] = useState('Start');
+    const [textColor, setTextColor] = useState('green');
+
     const formatDateTime = datetime => {
         if (datetime === null || datetime === undefined) {
             return ''
@@ -43,7 +46,17 @@ const EventTable = ({
 
     const editEvent = (e) => {
         e.preventDefault();
-        popupLoginToggle(event_id);
+        // popupLoginToggle(event_id);
+    }
+
+    const handleStartStop = text => {
+        if (text === 'Start') {
+            setStartStopText('Stop');
+            setTextColor('red');
+        } else {
+            setStartStopText('Start');
+            setTextColor('green');
+        }
     }
 
 
@@ -61,10 +74,17 @@ const EventTable = ({
             <td>{event_location}</td>
             <td>{event_sublocation}</td>
             <td className="attendees-detail" style={{
-                width: "180px"
+                width: "205px"
             }}>
                 <a href="#">Edit</a>
                 <a href="#">Delete</a>
+                <a
+                    href="#"
+                    onClick={(e) => {handleStartStop(startStopText)}}
+                    style={{
+                        color: `${textColor}`
+                    }}
+                >{startStopText}</a>
                 <a
                     href="#"
                     id={event_name}

@@ -22,7 +22,7 @@ const EventPage = () => {
     const [eventSubLocationUpdate, setEventSubLocationUpdate] = useState('');
 
     const fetchEventsData = () => {
-        fetch(`${UrlToken.URL}/events/`, {
+        fetch(`${UrlToken.URL}/bluguard37/alerts/`, {
             headers: {
                 'Authorization': `Token ${UrlToken.token}`,
                 'Content-Type': 'application/json'
@@ -182,7 +182,7 @@ const EventPage = () => {
 
     return (
         <div className="vital-page">
-            <h3>Events</h3>
+            <h3>Alerts</h3>
             <div className="table-div events-table">
                 <div className="refresh-btn">
                     <button
@@ -191,6 +191,7 @@ const EventPage = () => {
                     >Refresh</button>
                 </div>
 
+                {/*
                 <form
                     className="form-create-tank"
                     onSubmit={handleSubmit}
@@ -230,33 +231,25 @@ const EventPage = () => {
                         onClick={(e) => handleUpdateEvent(e)}
                     >Add SubProject</button>
                 </form>
+                */}
 
                 <div className="spinner"></div>
                 <table className="styled-table" id="table-events">
                     <thead>
                         <tr>
-                            <th>Event Name</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Location</th>
-                            <th>Sub Location</th>
-                            <th>Attendees</th>
+                            <th>Alert Reading</th>
+                            <th>Alert Date</th>
+                            <th>Alert Time</th>
+                            <th>Description</th>
+                            <th>Device</th>
                         </tr>
                     </thead>
                     <tbody>
                         {isEmpty ?
-                            eventData.map((event, index) => (
+                            eventData.map((alert, index) => (
                                 <EventTable
-                                    key={event.id}
-                                    fetchEventsData={fetchEventsData}
-                                    event_id={event.id}
-                                    event_name={event.event_name}
-                                    start_datetime={event.start_datetime}
-                                    end_datetime={event.end_datetime}
-                                    event_location={event.event_location}
-                                    event_sublocation={event.event_sublocation}
-                                    showAtendees={showAtendees}
-                                    popupLoginToggle={popupLoginToggle}
+                                    key={alert.id}
+                                    alert={alert}
                                 />
                             )) : <tr className="no-data">
                                     <td colSpan="11">No data available</td>
@@ -265,6 +258,7 @@ const EventPage = () => {
                     </tbody>
                 </table>
 
+                {/*
                 <div className="attendees-div">
                     <h3>{eventName}</h3>
                     <table className="styled-table">
@@ -292,6 +286,7 @@ const EventPage = () => {
                         </tbody>
                     </table>
                 </div>
+                */}
             </div>
         </div>
     )

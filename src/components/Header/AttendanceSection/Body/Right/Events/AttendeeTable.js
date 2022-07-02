@@ -31,10 +31,10 @@ const AttendeeTable = ({ attendee }) => {
         <tr>
             <td>{attendee.attendee_name}</td>
             <td>{attendee.tag_id}</td>
-            <td>{formatDate(attendee.check_in_date)}</td>
+            {/*<td>{formatDate(attendee.check_in_date)}</td>
             <td>{formatTime(attendee.check_in_time)}</td>
             <td>{formatDate(attendee.check_out_date)}</td>
-            <td>{formatTime(attendee.check_out_time)}</td>
+            <td>{formatTime(attendee.check_out_time)}</td>*/}
         </tr>
     )
 }

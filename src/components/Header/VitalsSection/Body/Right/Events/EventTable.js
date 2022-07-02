@@ -5,12 +5,7 @@ let token = GetToken()
 const UrlToken = token;
 
 
-const EventTable = ({
-    fetchEventsData,
-    event_id, event_name, start_datetime,
-    end_datetime, event_location, event_sublocation,
-    showAtendees, popupLoginToggle
-}) => {
+const EventTable = ({ alert }) => {
     const formatDateTime = datetime => {
         if (datetime === null || datetime === undefined) {
             return ''
@@ -22,28 +17,29 @@ const EventTable = ({
             return date + ' ' + time;
         }
     }
-    const deleteEvent = event_id => {
-        let confirm_ = window.confirm(`Are you sure want to delete Event "${event_name}"?`, false);
-        if (confirm_) {
-            fetch(`${UrlToken.URL}/delete_event/${event_id}/`, {
-                headers: {
-                    'Authorization': `Token ${UrlToken.token}`
-                }
-            })
-                .then(res => res.json())
-                .then(data => {
-                    fetchEventsData();
-                    alert(`${event_name} was deleted successfully!`)
-                })
-                .catch(err => console.log(err));
+
+    const formatDate = datetime => {
+        if (datetime === null || datetime === undefined) {
+            return ''
         } else {
-            //
+            let [year, month, date_] = datetime.split('-');
+            let date = date_ + '-' + month + '-' + year
+            return date;
+        }
+    }
+
+    const formatTime = datetime => {
+        if (datetime === null || datetime === undefined) {
+            return ''
+        } else {
+            let time = datetime.split('.')[0];
+            return time;
         }
     }
 
     const editEvent = (e) => {
         e.preventDefault();
-        popupLoginToggle(event_id);
+        // popupLoginToggle(event_id);
     }
 
 
@@ -55,22 +51,11 @@ const EventTable = ({
 
     return (
         <tr>
-            <td>{event_name}</td>
-            <td>{formatDateTime(start_datetime)}</td>
-            <td>{formatDateTime(end_datetime)}</td>
-            <td>{event_location}</td>
-            <td>{event_sublocation}</td>
-            <td className="attendees-detail" style={{
-                width: "180px"
-            }}>
-                <a href="#">Edit</a>
-                <a href="#">Delete</a>
-                <a
-                    href="#"
-                    id={event_name}
-                    onClick={(e) => showAtendees(event_id)}
-                >View List</a>
-            </td>
+            <td>{alert.alert_reading}</td>
+            <td>{formatDate(alert.alert_date)}</td>
+            <td>{formatTime(alert.alert_time)}</td>
+            <td>{alert.alert_code.alert_description}</td>
+            <td>{alert.device_id.device_mac}</td>
         </tr>
     )
 }

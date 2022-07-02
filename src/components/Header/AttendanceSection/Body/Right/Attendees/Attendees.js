@@ -48,7 +48,7 @@ const AttendeesDisplay = () => {
                         <tr>
                             <th>Attendee</th>
                             <th>Tag ID</th>
-                            <th>Event Name</th>
+                            {/*<th>Event Name</th> */}
                         </tr>
                     </thead>
                     <tbody>

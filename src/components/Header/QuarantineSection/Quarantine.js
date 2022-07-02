@@ -143,7 +143,7 @@ const QuarantinePage = () => {
                         </div>
                     </div>
 
-                    {/*<div className="bottommenu">
+                    <div className="bottommenu">
                         <div className="subtitle menu-option">
                             <a href="#">IoT Devices</a>
                         </div>
@@ -169,7 +169,7 @@ const QuarantinePage = () => {
                             >Beacons</a>
                         </div>
                     </div>
-                */}
+
                 </div>
 
                 <div className="rightbody body-part">
