@@ -14,9 +14,18 @@ const GatewayTable = ({ gateway }) => {
         }
     }
 
+    let color;
+    if (gateway.gateway_status === 'ONLINE') {
+        color = "green";
+    } else {
+        color = "red";
+    }
+
     return (
         <tr>
-            <td>{gateway.gateway_status}</td>
+            <td style={{
+                color: `${color}`
+            }}>{gateway.gateway_status}</td>
             <td>{gateway.gateway_location}</td>
             <td>{gateway.gateway_mac}</td>
             <td>{gateway.gateway_latitude}</td>

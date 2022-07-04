@@ -34,7 +34,7 @@ const GatewaysDisplay = () => {
 
 
     useEffect(() => {
-        // let setInterval1 = setInterval(fetchGateways, 2000);
+        let setInterval1 = setInterval(fetchGateways, 2000);
         fetchGateways();
     }, []);
 
