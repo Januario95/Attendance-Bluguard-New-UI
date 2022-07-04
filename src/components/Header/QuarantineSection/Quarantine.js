@@ -9,6 +9,7 @@ import {
     AttendancesDisplay, BeaconsDisplay,
     WearablePage
 } from './Body/Right';
+import AllWearablePage from './Body/Right/AllWearables/Wearables';
 
 
 const QuarantinePage = () => {
@@ -18,9 +19,10 @@ const QuarantinePage = () => {
     const [showGatewaysSection, setShowGatewaysSection] = useState(false);
     const [showWearablesSection, setShowWearablesSection] = useState(true);
     const [showBeaconsSection, setShowBeaconsSection] = useState(false);
+    const [showAllWearables, setShowAllWearables] = useState(false);
 
 
-    function runSetBackgroundColor(target, first, second, third, fourth, fifth) {
+    function runSetBackgroundColor(target, first, second, third, fourth, fifth, sixth) {
         let child = target.children[0]
         child.addEventListener('click', e => {
             target.classList.add('active-subheader');
@@ -29,6 +31,7 @@ const QuarantinePage = () => {
             third.classList.remove('active-subheader');
             fourth.classList.remove('active-subheader');
             fifth.classList.remove('active-subheader');
+            sixth.classList.remove('active-subheader');
         });
     }
 
@@ -37,15 +40,17 @@ const QuarantinePage = () => {
         let attendees = document.querySelector('.attendees');
         let attendances = document.querySelector('.attendances');
         let gateways = document.querySelector('.gateways');
-        let weareables = document.querySelector('.weareables');
+        let weareables = document.querySelector('.all-wearables');
         let beacons = document.querySelector('.beacons');
+        let all_wearables = document.querySelector('.all-wearables');
 
-        runSetBackgroundColor(events, attendees, attendances, gateways, weareables, beacons);
-        runSetBackgroundColor(attendees, attendances, gateways, weareables, beacons, events);
-        runSetBackgroundColor(attendances, gateways, weareables, beacons, events, attendees);
-        runSetBackgroundColor(gateways, weareables, beacons, events, attendees, attendances);
-        runSetBackgroundColor(weareables, beacons, events, attendees, attendances, gateways);
-        runSetBackgroundColor(beacons, events, attendees, attendances, gateways, weareables);
+        runSetBackgroundColor(events, attendees, attendances, gateways, weareables, beacons, all_wearables);
+        runSetBackgroundColor(attendees, attendances, gateways, weareables, beacons, all_wearables, events);
+        runSetBackgroundColor(attendances, gateways, weareables, beacons, all_wearables, events, attendees);
+        runSetBackgroundColor(gateways, weareables, beacons, all_wearables, events, attendees, attendances);
+        runSetBackgroundColor(weareables, beacons, all_wearables, events, attendees, attendances, gateways);
+        runSetBackgroundColor(beacons, all_wearables, events, attendees, attendances, gateways, weareables);
+        runSetBackgroundColor(all_wearables, events, attendees, attendances, gateways, weareables, beacons);
 
 
         showPage(target);
@@ -59,6 +64,7 @@ const QuarantinePage = () => {
             setShowGatewaysSection(false);
             setShowWearablesSection(false);
             setShowBeaconsSection(false);
+            setShowAllWearables(false);
         }
 
         if (target === 'attendees') {
@@ -68,6 +74,7 @@ const QuarantinePage = () => {
             setShowGatewaysSection(false);
             setShowWearablesSection(false);
             setShowBeaconsSection(false);
+            setShowAllWearables(false);
         }
 
         if (target === 'attendances') {
@@ -77,6 +84,7 @@ const QuarantinePage = () => {
             setShowGatewaysSection(false);
             setShowWearablesSection(false);
             setShowBeaconsSection(false);
+            setShowAllWearables(false);
         }
 
         if (target === 'gateways') {
@@ -86,6 +94,7 @@ const QuarantinePage = () => {
             setShowGatewaysSection(true);
             setShowWearablesSection(false);
             setShowBeaconsSection(false);
+            setShowAllWearables(false);
         }
 
         if (target === 'weareables') {
@@ -95,6 +104,7 @@ const QuarantinePage = () => {
             setShowGatewaysSection(false);
             setShowWearablesSection(true);
             setShowBeaconsSection(false);
+            setShowAllWearables(false);
         }
 
         if (target === 'beacons') {
@@ -104,6 +114,17 @@ const QuarantinePage = () => {
             setShowGatewaysSection(false);
             setShowWearablesSection(false);
             setShowBeaconsSection(true);
+            setShowAllWearables(false);
+        }
+
+        if (target === 'all-wearables') {
+            setShowEventsSection(false);
+            setShowAttendeesSection(false);
+            setShowAttendanceSection(false);
+            setShowGatewaysSection(false);
+            setShowWearablesSection(false);
+            setShowBeaconsSection(false);
+            setShowAllWearables(true);
         }
     }
 
@@ -125,7 +146,7 @@ const QuarantinePage = () => {
                                 href="#"
                                 className="events-sublink"
                                 onClick={(e) => handleLinkClick('events')}
-                            ></a>
+                            >Quanrantine</a>
                         </div>
                         <div className="attendees menu-option">
                             <a
@@ -154,11 +175,11 @@ const QuarantinePage = () => {
                                 onClick={(e) => handleLinkClick('gateways')}
                             >Gateways</a>
                         </div>
-                        <div className="weareables equipment-option">
+                        <div className="all-wearables equipment-option">
                             <a
                                 href="#"
                                 className="weareables-sublink"
-                                onClick={(e) => handleLinkClick('weareables')}
+                                onClick={(e) => handleLinkClick('all-wearables')}
                             >Wearables</a>
                         </div>
                         <div className="beacons equipment-option">
@@ -174,7 +195,7 @@ const QuarantinePage = () => {
 
                 <div className="rightbody body-part">
                     {showEventsSection ? (
-                        <EventPage />
+                        <WearablePage />
                     ) : ''}
                     {showAttendeesSection ? (
                         <AttendeesDisplay />
@@ -190,6 +211,9 @@ const QuarantinePage = () => {
                     ) : ''}
                     {showWearablesSection ? (
                         <WearablePage />
+                    ) : ''}
+                    {showAllWearables ? (
+                        <AllWearablePage />
                     ) : ''}
                 </div>
             </div>

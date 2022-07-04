@@ -6,13 +6,13 @@ let token = GetToken()
 const UrlToken = token;
 
 
-const WearablePage = () => {
+const AllWearablePage = () => {
     const [deviceData, setDeviceData] = useState([]);
     const [isEmpty, setIsEmpty] = useState(false);
 
 
     const fetchDeviceDate = () => {
-        fetch(`${UrlToken.URL}/bluguard37/tabledevice/`, {
+        fetch(`${UrlToken.URL}/bluguard37/alldevices/`, {
             headers: {
                 'Authorization': `Token ${UrlToken.token}`,
                 'Content-Type': 'application/json'
@@ -62,7 +62,7 @@ const WearablePage = () => {
 
     return (
         <div className="vital-page">
-            <h3>Vital Survellance</h3>
+            <h3>Wearables</h3>
             <div className="table-div table-scroll">
                 <table className="styled-table">
                     <thead>
@@ -108,4 +108,4 @@ const WearablePage = () => {
     )
 }
 
-export default WearablePage;
+export default AllWearablePage;

@@ -7,9 +7,9 @@ import {
 import {
     EventPage, AttendeesDisplay, GatewaysDisplay,
     AttendancesDisplay, BeaconsDisplay,
-    WearablePage
+    WearablePage, // AllWearablePage
 } from './Body/Right';
-
+import AllWearablePage from './Body/Right/AllWearables/Wearables';
 
 const VitalsPage = () => {
     const [showEventsSection, setShowEventsSection] = useState(false);
@@ -18,9 +18,10 @@ const VitalsPage = () => {
     const [showGatewaysSection, setShowGatewaysSection] = useState(false);
     const [showWearablesSection, setShowWearablesSection] = useState(true);
     const [showBeaconsSection, setShowBeaconsSection] = useState(false);
+    const [showAllWearables, setShowAllWearables] = useState(false);
 
 
-    function runSetBackgroundColor(target, first, second, third, fourth, fifth) {
+    function runSetBackgroundColor(target, first, second, third, fourth, fifth, sixth) {
         let child = target.children[0]
         child.addEventListener('click', e => {
             target.classList.add('active-subheader');
@@ -29,6 +30,7 @@ const VitalsPage = () => {
             third.classList.remove('active-subheader');
             fourth.classList.remove('active-subheader');
             fifth.classList.remove('active-subheader');
+            sixth.classList.remove('active-subheader');
         });
     }
 
@@ -37,15 +39,17 @@ const VitalsPage = () => {
         let attendees = document.querySelector('.attendees');
         let attendances = document.querySelector('.attendances');
         let gateways = document.querySelector('.gateways');
-        let weareables = document.querySelector('.weareables');
+        let weareables = document.querySelector('.all-wearables');
         let beacons = document.querySelector('.beacons');
+        let all_wearables = document.querySelector('.all-wearables');
 
-        runSetBackgroundColor(events, attendees, attendances, gateways, weareables, beacons);
-        runSetBackgroundColor(attendees, attendances, gateways, weareables, beacons, events);
-        runSetBackgroundColor(attendances, gateways, weareables, beacons, events, attendees);
-        runSetBackgroundColor(gateways, weareables, beacons, events, attendees, attendances);
-        runSetBackgroundColor(weareables, beacons, events, attendees, attendances, gateways);
-        runSetBackgroundColor(beacons, events, attendees, attendances, gateways, weareables);
+        runSetBackgroundColor(events, attendees, attendances, gateways, weareables, beacons, all_wearables);
+        runSetBackgroundColor(attendees, attendances, gateways, weareables, beacons, all_wearables, events);
+        runSetBackgroundColor(attendances, gateways, weareables, beacons, all_wearables, events, attendees);
+        runSetBackgroundColor(gateways, weareables, beacons, all_wearables, events, attendees, attendances);
+        runSetBackgroundColor(weareables, beacons, all_wearables, events, attendees, attendances, gateways);
+        runSetBackgroundColor(beacons, all_wearables, events, attendees, attendances, gateways, weareables);
+        runSetBackgroundColor(all_wearables, events, attendees, attendances, gateways, weareables, beacons);
 
 
         showPage(target);
@@ -59,6 +63,7 @@ const VitalsPage = () => {
             setShowGatewaysSection(false);
             setShowWearablesSection(false);
             setShowBeaconsSection(false);
+            setShowAllWearables(false);
         }
 
         if (target === 'attendees') {
@@ -68,6 +73,7 @@ const VitalsPage = () => {
             setShowGatewaysSection(false);
             setShowWearablesSection(false);
             setShowBeaconsSection(false);
+            setShowAllWearables(false);
         }
 
         if (target === 'attendances') {
@@ -77,6 +83,7 @@ const VitalsPage = () => {
             setShowGatewaysSection(false);
             setShowWearablesSection(false);
             setShowBeaconsSection(false);
+            setShowAllWearables(false);
         }
 
         if (target === 'gateways') {
@@ -86,6 +93,7 @@ const VitalsPage = () => {
             setShowGatewaysSection(true);
             setShowWearablesSection(false);
             setShowBeaconsSection(false);
+            setShowAllWearables(false);
         }
 
         if (target === 'weareables') {
@@ -95,6 +103,7 @@ const VitalsPage = () => {
             setShowGatewaysSection(false);
             setShowWearablesSection(true);
             setShowBeaconsSection(false);
+            setShowAllWearables(false);
         }
 
         if (target === 'beacons') {
@@ -104,6 +113,17 @@ const VitalsPage = () => {
             setShowGatewaysSection(false);
             setShowWearablesSection(false);
             setShowBeaconsSection(true);
+            setShowAllWearables(false);
+        }
+
+        if (target === 'all-wearables') {
+            setShowEventsSection(false);
+            setShowAttendeesSection(false);
+            setShowAttendanceSection(false);
+            setShowGatewaysSection(false);
+            setShowWearablesSection(false);
+            setShowBeaconsSection(false);
+            setShowAllWearables(true);
         }
     }
 
@@ -154,11 +174,11 @@ const VitalsPage = () => {
                                 onClick={(e) => handleLinkClick('gateways')}
                             >Gateways</a>
                         </div>
-                        <div className="weareables equipment-option">
+                        <div className="all-wearables equipment-option">
                             <a
                                 href="#"
                                 className="weareables-sublink"
-                                onClick={(e) => handleLinkClick('weareables')}
+                                onClick={(e) => handleLinkClick('all-wearables')}
                             >Wearables</a>
                         </div>
                         <div className="beacons equipment-option">
@@ -189,6 +209,9 @@ const VitalsPage = () => {
                     ) : ''}
                     {showWearablesSection ? (
                         <WearablePage />
+                    ) : ''}
+                    {showAllWearables ? (
+                        <AllWearablePage />
                     ) : ''}
                 </div>
             </div>

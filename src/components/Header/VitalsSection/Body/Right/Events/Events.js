@@ -123,7 +123,18 @@ const EventPage = () => {
             spinner.classList.remove('loading');
             spinner.classList.remove('show-tag');
 
-            showAtendees(eventId);
+            fetch(`${UrlToken.URL}/clear_all_alerts/`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Token ${UrlToken.token}`,
+                }
+            })
+                .then(res => res.text())
+                .then(data => {
+                    // console.log(data);
+                    fetchEventsData();
+                })
+                .catch(err => console.log(err));
         }, 500);
 
     }
@@ -188,7 +199,7 @@ const EventPage = () => {
                     <button
                         className="btn-refresh"
                         onClick={(e) => refreshPage(e)}
-                    >Refresh</button>
+                    >Clear Alerts</button>
                 </div>
 
                 {/*
@@ -234,29 +245,33 @@ const EventPage = () => {
                 */}
 
                 <div className="spinner"></div>
-                <table className="styled-table" id="table-events">
-                    <thead>
-                        <tr>
-                            <th>Alert Reading</th>
-                            <th>Alert Date</th>
-                            <th>Alert Time</th>
-                            <th>Description</th>
-                            <th>Device</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {isEmpty ?
-                            eventData.map((alert, index) => (
-                                <EventTable
-                                    key={alert.id}
-                                    alert={alert}
-                                />
-                            )) : <tr className="no-data">
-                                    <td colSpan="11">No data available</td>
-                                </tr>
-                        }
-                    </tbody>
-                </table>
+                <div className="table-scroll">
+                    <table className="styled-table" id="table-events">
+                        <thead>
+                            <tr>
+                                <th>Alert Reading</th>
+                                <th>Alert Date</th>
+                                <th>Alert Time</th>
+                                <th>Description</th>
+                                <th>Device</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {isEmpty ?
+                                eventData.map((alert, index) => (
+                                    <EventTable
+                                        key={alert.id}
+                                        alert={alert}
+                                        fetchEventsData={fetchEventsData}
+                                    />
+                                )) : <tr className="no-data">
+                                        <td colSpan="11">No data available</td>
+                                    </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
 
                 {/*
                 <div className="attendees-div">

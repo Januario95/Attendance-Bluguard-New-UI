@@ -5,7 +5,7 @@ let token = GetToken()
 const UrlToken = token;
 
 
-const EventTable = ({ alert }) => {
+const EventTable = ({ alert, fetchEventsData }) => {
     const formatDateTime = datetime => {
         if (datetime === null || datetime === undefined) {
             return ''
@@ -42,10 +42,25 @@ const EventTable = ({ alert }) => {
         // popupLoginToggle(event_id);
     }
 
+    const deleteAlert = alert_id => {
+        fetch(`${UrlToken.URL}/bluguard37/alerts/${alert_id}/`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Token ${UrlToken.token}`
+            }
+        })
+            .then(res => res.text())
+            .then(data => {
+                // console.log(data);
+                fetchEventsData();
+            })
+            .catch(err => console.log(err));
+    }
+
 
     useEffect(() => {
         // onClick={(e) => editEvent(e)}
-        // onClick={(e) => deleteEvent(event_id)}
+        // onClick={(e) => deleteAlert(event_id)}
     }, []);
 
 
@@ -56,6 +71,12 @@ const EventTable = ({ alert }) => {
             <td>{formatTime(alert.alert_time)}</td>
             <td>{alert.alert_code.alert_description}</td>
             <td>{alert.device_id.device_mac}</td>
+            <td>
+                <a
+                    href="#"
+                    onClick={(e) => deleteAlert(alert.id)}
+                >Delete</a>
+            </td>
         </tr>
     )
 }
