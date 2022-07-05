@@ -33,8 +33,25 @@ const AttendancesDisplay = () => {
     }
 
 
+    const refreshPage = e => {
+        let btn = document.querySelector('.btn-refresh');
+        let spinner = document.querySelector('.spinner');
+
+        btn.classList.add('hide-tag');
+        spinner.classList.add('loading');
+        spinner.classList.add('show-tag');
+
+        setTimeout(() => {
+            btn.classList.remove('hide-tag');
+            spinner.classList.remove('loading');
+            spinner.classList.remove('show-tag');
+        }, 500);
+
+    }
+
+
     useEffect(() => {
-        // let setInterval1 = setInterval(fetchGateways, 2000);
+        let setInterval1 = setInterval(fetchGateways, 2000);
         fetchGateways();
     }, []);
 
@@ -42,6 +59,16 @@ const AttendancesDisplay = () => {
     return (
         <div className="gateways-section">
             <h3>Attendance</h3>
+            <div className="refresh-btn">
+                <button
+                    style={{
+                        width: "115px"
+                    }}
+                    className="btn-refresh"
+                    onClick={(e) => refreshPage(e)}
+                >Clear Attendance</button>
+            </div>
+            <div className="spinner"></div>
             <div className="table-div surveillance-table">
                 <table className="styled-table">
                     <thead>
@@ -52,6 +79,7 @@ const AttendancesDisplay = () => {
                             <th>Check-In Time</th>
                             <th>Check-Out Date</th>
                             <th>Check-Out Time</th>
+                            <th>Remove</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -61,6 +89,7 @@ const AttendancesDisplay = () => {
                                     key={index}
                                     attendee={attendee}
                                     attendee_name={attendee.event}
+                                    fetchGateways={fetchGateways}
                                 />
                             ))
                             ) : (

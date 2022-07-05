@@ -6,13 +6,25 @@ const UrlToken = token;
 
 
 const EventTable = ({
-    fetchEventsData,
-    event_id, event_name, start_datetime,
-    end_datetime, event_location, event_sublocation,
+    fetchEventsData, event_id, active_event, event_name,
+    start_datetime, end_datetime, event_location, event_sublocation,
     showAtendees, popupLoginToggle
 }) => {
-    const [startStopText, setStartStopText] = useState('Start');
+    const [startStopText, setStartStopText] = useState('');
     const [textColor, setTextColor] = useState('green');
+    const [isActiveTitle, setIsActiveTitle] = useState('');
+
+    const setActiveEvent = () => {
+        if (active_event === true) {
+            setStartStopText('Start');
+            setTextColor('green');
+            setIsActiveTitle('true');
+        } else {
+            setStartStopText('Stop');
+            setTextColor('red');
+            setIsActiveTitle('false');
+        }
+    }
 
     const formatDateTime = datetime => {
         if (datetime === null || datetime === undefined) {
@@ -26,19 +38,34 @@ const EventTable = ({
         }
     }
     const deleteEvent = event_id => {
-        let confirm_ = window.confirm(`Are you sure want to delete Event "${event_name}"?`, false);
+        let confirm_ = window.confirm(`Are you sure want to delete attendances for the Event "${event_name}"?`, false);
         if (confirm_) {
-            fetch(`${UrlToken.URL}/delete_event/${event_id}/`, {
+            fetch(`${UrlToken.URL}/delete_all_attendance_by_event/${event_id}/`, {
                 headers: {
                     'Authorization': `Token ${UrlToken.token}`
                 }
             })
                 .then(res => res.json())
                 .then(data => {
-                    fetchEventsData();
-                    alert(`${event_name} was deleted successfully!`)
+                    console.log(data);
+                    // fetchEventsData();
+                    // alert(`${event_name} was deleted successfully!`)
                 })
                 .catch(err => console.log(err));
+
+
+
+            // fetch(`${UrlToken.URL}/delete_event/${event_id}/`, {
+            //     headers: {
+            //         'Authorization': `Token ${UrlToken.token}`
+            //     }
+            // })
+            //     .then(res => res.json())
+            //     .then(data => {
+            //         fetchEventsData();
+            //         alert(`${event_name} was deleted successfully!`)
+            //     })
+            //     .catch(err => console.log(err));
         } else {
             //
         }
@@ -57,10 +84,22 @@ const EventTable = ({
             setStartStopText('Start');
             setTextColor('green');
         }
+
+        fetch(`${UrlToken.URL}/set_event_active_inactive/${event_id}/${event_name}/`, {
+                headers: {
+                    'Authorization': `Token ${UrlToken.token}`
+                }
+            })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+                })
+                .catch(err => console.log(err));
     }
 
 
     useEffect(() => {
+        setActiveEvent();
         // onClick={(e) => editEvent(e)}
         // onClick={(e) => deleteEvent(event_id)}
     }, []);
@@ -74,16 +113,20 @@ const EventTable = ({
             <td>{event_location}</td>
             <td>{event_sublocation}</td>
             <td className="attendees-detail" style={{
-                width: "205px"
+                width: "260px"
             }}>
                 <a href="#">Edit</a>
-                <a href="#">Delete</a>
+                <a
+                    href="#"
+                    onClick={(e) => deleteEvent(event_id)}
+                >Clear attendance</a>
                 <a
                     href="#"
                     onClick={(e) => {handleStartStop(startStopText)}}
                     style={{
                         color: `${textColor}`
                     }}
+                    title={isActiveTitle}
                 >{startStopText}</a>
                 <a
                     href="#"

@@ -177,7 +177,7 @@ const EventPage = () => {
         fetchEventsData();
         let eventsubheader = document.querySelector('.events');
         eventsubheader.classList.add('active-subheader');
-        let setInterval1 = setInterval(fetchEventsData, 1000);
+        // let setInterval1 = setInterval(fetchEventsData, 1000);
     }, []);
 
     return (
@@ -251,6 +251,7 @@ const EventPage = () => {
                                     key={event.id}
                                     fetchEventsData={fetchEventsData}
                                     event_id={event.id}
+                                    active_event={event.active_event}
                                     event_name={event.event_name}
                                     start_datetime={event.start_datetime}
                                     end_datetime={event.end_datetime}

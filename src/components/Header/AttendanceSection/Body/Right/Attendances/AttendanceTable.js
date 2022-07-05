@@ -1,7 +1,12 @@
 import React from 'react';
+import {GetToken} from '../../../../../TestToken';
 
 
-const AttendanceTable = ({ attendee }) => {
+let token = GetToken()
+const UrlToken = token;
+
+
+const AttendanceTable = ({ attendee, fetchGateways }) => {
     let attendee_name = attendee.attendee.attendee_name;
     let event_name = attendee.attendee.event.event_name;
 
@@ -24,6 +29,22 @@ const AttendanceTable = ({ attendee }) => {
         }
     }
 
+    const deleteAttendance = e => {
+        fetch(`${UrlToken.URL}/attendance/${e}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Token ${UrlToken.token}`,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => res.text())
+            .then(data => {
+                fetchGateways();
+                //console.log(data);
+            })
+            .catch(err => console.log(err));
+    }
+
     return (
         <tr>
             <td>{attendee_name}</td>
@@ -32,6 +53,12 @@ const AttendanceTable = ({ attendee }) => {
             <td>{formatTime(attendee.check_in_time)}</td>
             <td>{formatDate(attendee.check_out_date)}</td>
             <td>{formatTime(attendee.check_out_time)}</td>
+            <td>
+                <a
+                    href="#"
+                    onClick={(e) => deleteAttendance(attendee.id)}
+                >Delete</a>
+            </td>
         </tr>
     );
 }
