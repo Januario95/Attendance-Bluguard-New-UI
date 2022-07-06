@@ -45,6 +45,18 @@ const AttendancesDisplay = () => {
             btn.classList.remove('hide-tag');
             spinner.classList.remove('loading');
             spinner.classList.remove('show-tag');
+
+            fetch(`${UrlToken.URL}/delete_all_attendance/`, {
+                headers: {
+                    'Authorization': `Token ${UrlToken.token}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(res => res.json())
+                .then(data => {
+                    // console.log(data);
+                })
+                .catch(err => console.log(err));
         }, 500);
 
     }
@@ -69,7 +81,7 @@ const AttendancesDisplay = () => {
                 >Clear Attendance</button>
             </div>
             <div className="spinner"></div>
-            <div className="table-div surveillance-table">
+            <div className="table-div surveillance-table table-scroll">
                 <table className="styled-table">
                     <thead>
                         <tr>

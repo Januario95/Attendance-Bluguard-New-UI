@@ -144,6 +144,7 @@
 }
 .active-subheader {
     background-color: #ffc;
+    /* border-left: 6px solid teal; */
 }
 .active-header {
     background-color: #79aec8;
