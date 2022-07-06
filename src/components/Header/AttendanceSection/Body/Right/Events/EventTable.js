@@ -113,7 +113,7 @@ const EventTable = ({
             <td>{event_location}</td>
             <td>{event_sublocation}</td>
             <td className="attendees-detail" style={{
-                width: "260px"
+                width: "300px"
             }}>
                 <a href="#">Edit</a>
                 <a
@@ -132,7 +132,7 @@ const EventTable = ({
                     href="#"
                     id={event_name}
                     onClick={(e) => showAtendees(event_id)}
-                >View List</a>
+                >View Attendees</a>
             </td>
         </tr>
     )

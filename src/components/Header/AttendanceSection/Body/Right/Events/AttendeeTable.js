@@ -1,7 +1,19 @@
 import React, { useState, useEffect } from 'react';
 
 
-const AttendeeTable = ({ attendee }) => {
+const AttendeesTable = ({ attendee, handleShowEvents }) => {
+    // console.log(attendee.event_id)
+    let attendance = {};
+    try {
+        attendance = attendee.attendance[0];
+    } catch (err) {
+        // console.log(err);
+    }
+    // if (attendee.attendance.length > 0) {
+    //     attendance = attendee.attendance[0];
+    // }
+    // console.log(attendance);
+
     const formatDate = datetime => {
         if (datetime === null || datetime === undefined) {
             return ''
@@ -31,12 +43,18 @@ const AttendeeTable = ({ attendee }) => {
         <tr>
             <td>{attendee.attendee_name}</td>
             <td>{attendee.tag_id}</td>
-            {/*<td>{formatDate(attendee.check_in_date)}</td>
-            <td>{formatTime(attendee.check_in_time)}</td>
-            <td>{formatDate(attendee.check_out_date)}</td>
-            <td>{formatTime(attendee.check_out_time)}</td>*/}
+            <td>{formatDate(attendance.check_in_date)}</td>
+            <td>{formatTime(attendance.check_in_time)}</td>
+            <td>{formatDate(attendance.check_out_date)}</td>
+            <td>{formatTime(attendance.check_out_time)}</td>
+            <td>
+                <a
+                    href="#"
+                    onClick={() => handleShowEvents(attendee.attendee_id)}
+                >View Events</a>
+            </td>
         </tr>
     )
 }
 
-export default AttendeeTable;
+export default AttendeesTable;

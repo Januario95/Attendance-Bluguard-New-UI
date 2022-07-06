@@ -26,7 +26,9 @@ const AttendeeTable = ({ attendee }) => {
         <tr>
             <td>{attendee.attendee_name}</td>
             <td>{attendee.tag_id}</td>
-            {/*<td>{attendee.event.event_name}</td>*/}
+            <td>
+                <a href="#">View Events</a>
+            </td>
         </tr>
     );
 }

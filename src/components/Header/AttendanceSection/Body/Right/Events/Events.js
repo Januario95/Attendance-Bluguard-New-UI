@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import EventTable from './EventTable';
 import AttendeeTable from './AttendeeTable';
+import AttendeesList from './AttendeesList';
 import {GetToken} from '../../../../../TestToken';
 import close_image from '../../../../../../Static/close_red.png';
 
@@ -20,6 +21,8 @@ const EventPage = () => {
     const [eventEndUpdate, setEventEndUpdate] = useState('');
     const [eventLocationUpdate, setEventLocationUpdate] = useState('');
     const [eventSubLocationUpdate, setEventSubLocationUpdate] = useState('');
+    const [eventAttendees, setEventAttendees] = useState([]);
+    const [isEventAttendees, setIsEventAttendees] = useState(false);
 
     const fetchEventsData = () => {
         fetch(`${UrlToken.URL}/events/`, {
@@ -72,8 +75,8 @@ const EventPage = () => {
         })
             .then(res => res.json())
             .then(data => {
-                // console.log(data);
-                setEventName(data.event_name + ' - Attendees');
+                // console.log(data.event_name);
+                setEventName(data.event_name);
             })
             .catch(err => console.log(err));
     }
@@ -84,9 +87,6 @@ const EventPage = () => {
     }
 
     const showAtendees = event_id => {
-        // let links = document.querySelectorAll('.active-link');
-        // link.classList.add('active-event');
-
         setEventId(event_id);
         // console.log(event_id);
 
@@ -101,10 +101,15 @@ const EventPage = () => {
             })
                 .then(res => res.json())
                 .then(data => {
-                    // console.log(data.attendees[0].event);
+                    // console.log(data);
                     setAttendeeIsEmpty(true);
                     setAttendees(data.attendees);
-                    fetchEventName(data.attendees[0].event);
+                    if (data.attendees.length !== 0) {
+                        // fetchEventName(data.attendees[0].event);
+                        fetchEventName(event_id);
+                    } else {
+                        setEventName('No Attendees scheduled');
+                    }
                 })
                 .catch(err => console.log(err));
         }
@@ -171,6 +176,22 @@ const EventPage = () => {
         const popup = document.querySelector('.form-create-tank');
         popup.classList.toggle('active');
         fetchEventById(id);
+    }
+
+    const handleShowEvents = (attendee_id) => {
+        fetch(`${UrlToken.URL}/get_event_by_attendee_id/${attendee_id}/`, {
+            headers: {
+                'Authorization': `Token ${UrlToken.token}`,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                // console.log(data.events);
+                setIsEventAttendees(true);
+                setEventAttendees(data.events);
+            })
+            .catch(err => console.log(err));
     }
 
     useEffect(() => {
@@ -241,7 +262,7 @@ const EventPage = () => {
                             <th>End Date</th>
                             <th>Location</th>
                             <th>Sub Location</th>
-                            <th>Attendees</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -274,18 +295,20 @@ const EventPage = () => {
                             <tr>
                                 <th>Attendee Name</th>
                                 <th>Tag ID</th>
-                                {/*<th>Check-In Date</th>
+                                <th>Check-In Date</th>
                                 <th>Check-In Time</th>
                                 <th>Check-Out Date</th>
-                                <th>Check-Out Time</th> */}
+                                <th>Check-Out Time</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             {attendeeIsEmpty ?
                                 attendees.map((attendee, index) => (
                                     <AttendeeTable
-                                        key={attendee.id}
+                                        key={attendee.attendee_id}
                                         attendee={attendee}
+                                        handleShowEvents={handleShowEvents}
                                     />
                                 )) : <tr className="no-data">
                                         <td colSpan="11">No data available</td>
@@ -294,6 +317,31 @@ const EventPage = () => {
                         </tbody>
                     </table>
                 </div>
+
+                {isEventAttendees ? (
+                    <div className="attendees-div">
+                        <h3>Events</h3>
+                        <table className="styled-table" id="table-events">
+                            <thead>
+                                <tr>
+                                    <th>Event Name</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Location</th>
+                                    <th>Sub Location</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    {eventAttendees.map((event, index) => (
+                                        <AttendeesList
+                                            key={event.id}
+                                            event={event}
+                                        />
+                                    ))}
+                            </tbody>
+                        </table>
+                    </div>
+                ) : ''}
             </div>
         </div>
     )
