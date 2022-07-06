@@ -1,7 +1,8 @@
 import React from 'react';
 
 
-const AttendeeTable = ({ attendee }) => {
+const AttendeeTable = ({ attendee, handleShowEvents }) => {
+    // console.log(attendee.id);
 
     const formatDate = datetime => {
         if (datetime === null || datetime === undefined) {
@@ -27,7 +28,10 @@ const AttendeeTable = ({ attendee }) => {
             <td>{attendee.attendee_name}</td>
             <td>{attendee.tag_id}</td>
             <td>
-                <a href="#">View Events</a>
+                <a
+                    href="#"
+                    onClick={(e) => handleShowEvents(attendee.id, attendee.attendee_name)}
+                >View Events</a>
             </td>
         </tr>
     );
