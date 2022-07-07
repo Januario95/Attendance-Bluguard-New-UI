@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 
 const AttendeesList = ({ event }) => {
-    console.log(event);
+    // console.log(event);
     const formatDateTime = datetime => {
         if (datetime === null || datetime === undefined) {
             return ''

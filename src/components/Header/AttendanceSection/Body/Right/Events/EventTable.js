@@ -16,13 +16,13 @@ const EventTable = ({
 
     const setActiveEvent = () => {
         if (active_event === true) {
-            setStartStopText('Start');
-            setTextColor('green');
-            setIsActiveTitle('true');
-        } else {
             setStartStopText('Stop');
             setTextColor('red');
             setIsActiveTitle('false');
+        } else {
+            setStartStopText('Start');
+            setTextColor('green');
+            setIsActiveTitle('true');
         }
     }
 
@@ -37,7 +37,7 @@ const EventTable = ({
             return date + ' ' + time;
         }
     }
-    const deleteEvent = event_id => {
+    const deleteEventAttenndance = event_id => {
         let confirm_ = window.confirm(`Are you sure want to delete attendances for the Event "${event_name}"?`, false);
         if (confirm_) {
             fetch(`${UrlToken.URL}/delete_all_attendance_by_event/${event_id}/`, {
@@ -47,25 +47,11 @@ const EventTable = ({
             })
                 .then(res => res.json())
                 .then(data => {
-                    console.log(data);
+                    // console.log(data);
                     // fetchEventsData();
                     // alert(`${event_name} was deleted successfully!`)
                 })
                 .catch(err => console.log(err));
-
-
-
-            // fetch(`${UrlToken.URL}/delete_event/${event_id}/`, {
-            //     headers: {
-            //         'Authorization': `Token ${UrlToken.token}`
-            //     }
-            // })
-            //     .then(res => res.json())
-            //     .then(data => {
-            //         fetchEventsData();
-            //         alert(`${event_name} was deleted successfully!`)
-            //     })
-            //     .catch(err => console.log(err));
         } else {
             //
         }
@@ -92,7 +78,7 @@ const EventTable = ({
             })
                 .then(res => res.json())
                 .then(data => {
-                    console.log(data);
+                    // console.log(data);
                 })
                 .catch(err => console.log(err));
     }
@@ -101,7 +87,7 @@ const EventTable = ({
     useEffect(() => {
         setActiveEvent();
         // onClick={(e) => editEvent(e)}
-        // onClick={(e) => deleteEvent(event_id)}
+        // onClick={(e) => deleteEventAttenndance(event_id)}
     }, []);
 
 
@@ -118,7 +104,7 @@ const EventTable = ({
                 <a href="#">Edit</a>
                 <a
                     href="#"
-                    onClick={(e) => deleteEvent(event_id)}
+                    onClick={(e) => deleteEventAttenndance(event_id)}
                 >Clear attendance</a>
                 <a
                     href="#"

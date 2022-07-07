@@ -50,7 +50,7 @@ const AttendeesTable = ({ attendee, handleShowEvents }) => {
             <td>
                 <a
                     href="#"
-                    onClick={() => handleShowEvents(attendee.attendee_id)}
+                    onClick={() => handleShowEvents(attendee.attendee_id, attendee.attendee_name)}
                 >View Events</a>
             </td>
         </tr>

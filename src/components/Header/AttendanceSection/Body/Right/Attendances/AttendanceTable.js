@@ -9,7 +9,7 @@ const UrlToken = token;
 const AttendanceTable = ({ attendee, fetchGateways }) => {
     // console.log(attendee);
     let attendee_name = attendee.attendee; // .attendee_name;
-    let event_name = attendee.attendee; // .event.event_name;
+    let event_name = attendee.event_name;
 
     const formatDate = datetime => {
         if (datetime === null || datetime === undefined) {

@@ -23,6 +23,7 @@ const EventPage = () => {
     const [eventSubLocationUpdate, setEventSubLocationUpdate] = useState('');
     const [eventAttendees, setEventAttendees] = useState([]);
     const [isEventAttendees, setIsEventAttendees] = useState(false);
+    const [attendeeEvent, setAttendeeEvent] = useState('');
 
     const fetchEventsData = () => {
         fetch(`${UrlToken.URL}/events/`, {
@@ -76,14 +77,16 @@ const EventPage = () => {
             .then(res => res.json())
             .then(data => {
                 // console.log(data.event_name);
-                setEventName(data.event_name);
+                setEventName("Attendess for " + data.event_name);
             })
             .catch(err => console.log(err));
     }
 
     const consoleEventId = () => {
-        // console.log(eventId);
-        showAtendees(2);
+        if (eventId !== null) {
+            // console.log(eventId);
+            showAtendees(eventId);
+        }
     }
 
     const showAtendees = event_id => {
@@ -108,6 +111,7 @@ const EventPage = () => {
                         // fetchEventName(data.attendees[0].event);
                         fetchEventName(event_id);
                     } else {
+                        setIsEventAttendees(false);
                         setEventName('No Attendees scheduled');
                     }
                 })
@@ -127,8 +131,9 @@ const EventPage = () => {
             btn.classList.remove('hide-tag');
             spinner.classList.remove('loading');
             spinner.classList.remove('show-tag');
+            window.location.reload();
 
-            showAtendees(eventId);
+            // showAtendees(eventId);
         }, 500);
 
     }
@@ -178,7 +183,7 @@ const EventPage = () => {
         fetchEventById(id);
     }
 
-    const handleShowEvents = (attendee_id) => {
+    const handleShowEvents = (attendee_id, attende_name) => {
         fetch(`${UrlToken.URL}/get_event_by_attendee_id/${attendee_id}/`, {
             headers: {
                 'Authorization': `Token ${UrlToken.token}`,
@@ -189,6 +194,7 @@ const EventPage = () => {
             .then(data => {
                 // console.log(data.events);
                 setIsEventAttendees(true);
+                setAttendeeEvent(attende_name);
                 setEventAttendees(data.events);
             })
             .catch(err => console.log(err));
@@ -198,7 +204,12 @@ const EventPage = () => {
         fetchEventsData();
         let eventsubheader = document.querySelector('.events');
         eventsubheader.classList.add('active-subheader');
-        // let setInterval1 = setInterval(fetchEventsData, 1000);
+        let setInterval1 = setInterval(fetchEventsData, 1000);
+
+        // let setInterval2 = setInterval(consoleEventId, 1000);
+        // let setInterval2 = setInterval(() => {
+        //     showAtendees(eventId);
+        // }, 1000);
     }, []);
 
     return (
@@ -320,7 +331,7 @@ const EventPage = () => {
 
                 {isEventAttendees ? (
                     <div className="attendees-div">
-                        <h3>Events</h3>
+                        <h3>Events for {attendeeEvent}</h3>
                         <table className="styled-table" id="table-events">
                             <thead>
                                 <tr>

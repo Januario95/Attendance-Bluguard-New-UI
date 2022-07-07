@@ -45,7 +45,7 @@ const AttendeesDisplay = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data); // .events);
+                // console.log(data); // .events);
                 setIsEventAttendees(true);
                 setEventAttendees(data.events);
                 setActiveAttendee(attendee_name);
@@ -55,7 +55,7 @@ const AttendeesDisplay = () => {
 
 
     useEffect(() => {
-        // let setInterval1 = setInterval(fetchGateways, 2000);
+        let setInterval1 = setInterval(fetchGateways, 2000);
         fetchGateways();
     }, []);
 
@@ -94,7 +94,7 @@ const AttendeesDisplay = () => {
 
             {isEventAttendees ? (
                 <div className="attendees-div">
-                    <h3>{activeAttendee}</h3>
+                    <h5>Events for {activeAttendee}</h5>
                     <table className="styled-table" id="table-events">
                         <thead>
                             <tr>
@@ -106,12 +106,19 @@ const AttendeesDisplay = () => {
                             </tr>
                         </thead>
                         <tbody>
-                                {eventAttendees.map((event, index) => (
-                                    <AttendeesList
-                                        key={event.id}
-                                        event={event}
-                                    />
-                                ))}
+                                {eventAttendees.length > 0 ? (
+                                    eventAttendees.map((event, index) => (
+                                        <AttendeesList
+                                            key={event.id}
+                                            event={event}
+                                        />
+                                    ))
+                                ) : (
+                                    <tr className="no-data">
+                                        <td colSpan="6">No Events scheduled</td>
+                                    </tr>
+                                )
+                            }
                         </tbody>
                     </table>
                 </div>
