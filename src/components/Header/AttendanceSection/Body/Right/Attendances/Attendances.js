@@ -10,6 +10,22 @@ const UrlToken = token;
 const AttendancesDisplay = () => {
     const [gateways, setGateways] = useState([]);
     const [isEmpty, setIsEmpty] = useState(false);
+    const [counter, setCounter] = useState(0);
+
+    const fetchCounter = () => {
+        fetch(`${UrlToken.URL}/counter/`, {
+            headers: {
+                'Authorization': `Token ${UrlToken.token}`,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                setCounter(data[0].counter);
+                // setGateways(data);
+            })
+            .catch(err => console.log(err));
+    }
 
 
     const fetchGateways = () => {
@@ -65,12 +81,15 @@ const AttendancesDisplay = () => {
     useEffect(() => {
         let setInterval1 = setInterval(fetchGateways, 2000);
         fetchGateways();
+        // fetchCounter();
+        // let setInterval2 = setInterval(fetchCounter, 2000);
     }, []);
 
 
     return (
         <div className="gateways-section">
             <h3>Attendance</h3>
+            <h5>counter: {counter}</h5>
             <div className="refresh-btn">
                 <button
                     style={{
